@@ -51,9 +51,9 @@ var txt;
 
 function setup() {
   var i;
-  // for (i = 0; i < 4; i++) {
-  //   givens[i] = prompt("enter the " + ordinal_suffix_of(i + 1) + " principal part")
-  // }
+  for (i = 0; i < 4; i++) {
+    givens[i] = prompt("enter the " + ordinal_suffix_of(i + 1) + " principal part")
+  }
 
   /*Indicative*/
   /*page1*/
