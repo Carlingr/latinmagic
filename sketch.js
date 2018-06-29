@@ -41,158 +41,135 @@ var PerfEnds = ["i", "isti", "it", "imus", "istis", "erunt"];
 var FutPEnds = ["", "", "", "", "", ""];
 var PlupEnds = ["", "", "", "", "", ""];
 var EstConj = ["sum", "es", "est", "sumus", "estis", "sunt"];
+var blank_array = ["", "", "", "", "", ""];
 
 
 var vowels = ["e", "i", "i", "i", "i", ""];
+var ba = ["ba", "ba", "ba", "ba", "ba", "ba"]
 
 var txt;
 
 function setup() {
   var i;
-  for (i = 0; i < 4; i++) {
-    givens[i] = prompt("enter the " + ordinal_suffix_of(i + 1) + " principal part")
-  }
+  // for (i = 0; i < 4; i++) {
+  //   givens[i] = prompt("enter the " + ordinal_suffix_of(i + 1) + " principal part")
+  // }
 
   /*Indicative*/
   /*page1*/
   roots[0] = givens[0].slice(0, -1); //get the root by dropping the last char of the string.
 
   /*Present Active Indicative*/
-  for (i = 0; i < output.PresActInd.length; i++) { //deal with the regular rules
-    output.PresActInd[i] = roots[0] + vowels[i] + ActEnds[i]
-  }
+  output.PresActInd = join_parts(roots[0], vowels, ActEnds);
   output.PresActInd[0] = roots[0] + "o"; //deal with 1st sing cause it's weird
   /*Present Passive Indicative*/
-  for (i = 0; i < output.PresPassInd.length; i++) { //deal with the regular rules
-    output.PresPassInd[i] = roots[0] + vowels[i] + PassEnds[i]
-  }
+  output.PresPassInd = join_parts(roots[0], vowels, PassEnds);
 
   /*Imperfect Active Indicative*/
-  output.ImpActInd[0] = roots[0] + "o"; //deal with 1st sing cause it's weird
-  for (i = 0; i < output.ImpActInd.length; i++) { //deal with the regular rules
-    output.ImpActInd[i] = roots[0] + "ba" + ActEnds[i]
-  }
+  output.ImpActInd = join_parts(roots[0], "ba", ActEnds);
   /*Imperfect Passive Indicative*/
-  for (i = 0; i < output.ImpPassInd.length; i++) { //deal with the regular rules
-    output.ImpPassInd[i] = roots[0] + "ba" + PassEnds[i]
-  }
+  output.ImpPassInd = join_parts(roots[0], "ba", PassEnds);
 
   /*Future Active Indicative*/
-  output.FutActInd[0] = roots[0] + "o"; //deal with 1st sing cause it's weird
-  for (i = 0; i < output.FutActInd.length; i++) { //deal with the regular rules
-    output.FutActInd[i] = roots[0] + FutVowels[i] + ActEnds[i]
-  }
+  output.FutActInd = join_parts(roots[0], FutVowels, ActEnds);
   /*Future Passive Indicative*/
-  for (i = 0; i < output.FutPassInd.length; i++) { //deal with the regular rules
-    output.FutPassInd[i] = roots[0] + FutVowels[i] + PassEnds[i]
-  }
+  output.FutPassInd = join_parts(roots[0], FutVowels, PassEnds);
 
   /*page2*/
   roots[2] = givens[2].slice(0, -1); //get the root by dropping the last char of the string.
   roots[3] = givens[3].slice(0, -2) + "i"; //get the root by dropping the last char of the string.
 
   /*Perfect Active Indicative*/
-  for (i = 0; i < output.PerfActInd.length; i++) { //deal with the regular rules
-    output.PerfActInd[i] = roots[2] + PerfEnds[i]
-  }
+  output.PerfActInd = join_parts(roots[2], PerfEnds);
   /*Perfect Passive Indicative*/
-  for (i = 0; i < output.PerfPassInd.length; i++) { //deal with the singular
-    output.PerfPassInd[i] = givens[3] + " " + EstConj[i]
-  }
-  for (i = 3; i < output.PerfPassInd.length; i++) { //deal with the plurals
-    output.PerfPassInd[i] = roots[3] + " " + EstConj[i]
-  }
+  output.PerfPassInd = conj_with_est(" ", EstConj);
 
   /*Pluperfect Active Indicative*/
-  for (i = 0; i < output.PlupActInd.length; i++) { //deal with the regular rules
-    PlupEnds[i] = "era" + ActEnds[i]
-    output.PlupActInd[i] = roots[2] + PlupEnds[i]
-  }
+  console.log("look here")
+  PlupEnds = add_string_to_array("era", ActEnds);
+  output.PlupActInd = join_parts(roots[2], "", PlupEnds);
   /*Pluperfect Passive Indicative*/
-  for (i = 0; i < output.PlupPassInd.length; i++) { //deal with the singular
-    output.PlupPassInd[i] = givens[3] + " " + PlupEnds[i]
-  }
-  for (i = 3; i < output.PlupPassInd.length; i++) { //deal with the plurals
-    output.PlupPassInd[i] = roots[3] + " " + PlupEnds[i]
-  }
+  output.PlupPassInd = conj_with_est(" ", PlupEnds)
 
   /*FutPerfect Active Indicative*/
-  for (i = 0; i < output.FutPActInd.length; i++) { //deal with the regular rules
-    FutPEnds[i] = "eri" + ActEnds[i]
-    output.FutPActInd[i] = roots[2] + FutPEnds[i]
-  }
+  FutPEnds = add_string_to_array("eri", ActEnds)
+  output.FutPActInd = join_parts(roots[2], FutPEnds);
   output.FutPActInd[0] = roots[2] + "ero"; //1st sing is annoying
   /*FutPerfect Passive Indicative*/
-  for (i = 0; i < output.FutPPassInd.length; i++) { //deal with the singular
-    output.FutPPassInd[i] = givens[3] + " " + FutPEnds[i]
-  }
-  for (i = 3; i < output.FutPPassInd.length; i++) { //deal with the plurals
-    output.FutPPassInd[i] = roots[3] + " " + FutPEnds[i]
-  }
+  output.FutPPassInd = conj_with_est(" ", FutPEnds)
 
   /*Indicative*/
   /*page3*/
   roots[1] = givens[1];
 
   /*Present Active Subjunctive*/
-  for (i = 0; i < output.PresActSubj.length; i++) { //deal with the regular rules
-    output.PresActSubj[i] = roots[0] + "e" + ActEnds[i]
-  }
+  output.PresActSubj = join_parts(roots[0], "e", ActEnds);
   /*Present Passive Subjunctive*/
-  for (i = 0; i < output.PresPassSubj.length; i++) { //deal with the regular rules
-    output.PresPassSubj[i] = roots[0] + "a" + PassEnds[i]
-  }
-
-  /*Present Active Subjunctive*/
-  for (i = 0; i < output.PresActSubj.length; i++) { //deal with the regular rules
-    output.PresActSubj[i] = roots[0] + "e" + ActEnds[i]
-  }
-  /*Present Passive Subjunctive*/
-  for (i = 0; i < output.PresPassSubj.length; i++) { //deal with the regular rules
-    output.PresPassSubj[i] = roots[0] + "a" + PassEnds[i]
-  }
+  output.PresPassSubj = join_parts(roots[0], "a", PassEnds);
 
   /*Imperfect Active Subjunctive*/
-  for (i = 0; i < output.ImpActSubj.length; i++) { //deal with the regular rules
-    output.ImpActSubj[i] = roots[1] + ActEnds[i]
-  }
+  output.ImpActSubj = join_parts(roots[1], ActEnds);
   /*Imperfect Passive Subjunctive*/
-  for (i = 0; i < output.ImpPassSubj.length; i++) { //deal with the regular rules
-    output.ImpPassSubj[i] = roots[1] + PassEnds[i]
-  }
+  output.ImpPassSubj = join_parts(roots[1], PassEnds);
+
 
   /*Perfect Active Subjunctive*/
-  for (i = 0; i < output.PerfActSubj.length; i++) { //deal with the regular rules
-    output.PerfActSubj[i] = roots[2] + FutPEnds[i]
-  }
+  output.PerfActSubj = join_parts(roots[2], FutPEnds);
   output.PerfActSubj[0] = roots[2] + "erem"; //1st sing is annoying
   /*Perfect Passive Subjunctive*/
-  for (i = 0; i < output.FutPassSubj.length; i++) { //deal with the singular
-    output.PerfPassSubj[i] = givens[3] + " si" + ActEnds[i]
-  }
-  for (i = 3; i < output.FutActSubj.length; i++) { //deal with the plurals
-    output.PerfPassSubj[i] = roots[3] + " si" + ActEnds[i]
-  }
+  output.PerfPassSubj = conj_with_est(" si", ActEnds);
 
   /*Pluperfect Active Subjunctive*/
-  for (i = 0; i < output.PlupActSubj.length; i++) { //deal with the regular rules
-    PlupEnds[i] = "isse" + ActEnds[i]
-    output.PlupActSubj[i] = roots[2] + PlupEnds[i]
-  }
+  PlupEnds = add_string_to_array("isse", ActEnds);
+  output.PlupActSubj = join_parts(roots[2], PlupEnds);
   /*Pluperfect Passive Subjunctive*/
-  for (i = 0; i < output.PlupPassSubj.length; i++) { //deal with the singular
-    output.PlupPassSubj[i] = givens[3] + " esse" + ActEnds[i]
-  }
-  for (i = 3; i < output.PlupPassSubj.length; i++) { //deal with the plurals
-    output.PlupPassSubj[i] = roots[3] + " esse" + ActEnds[i]
-  }
+  output.PlupPassSubj = conj_with_est(" esse", ActEnds);
 
-
+  /*Output the stuffs*/
   txt = JSON.stringify(output, null, 2);
   txt = txt.replace(/\n/g, "<br/>")
   txt = createP(txt)
 }
 
+function join_parts(root, vowel, ending) {
+  var vowel_array; //amazingly, we will need this.
+  var output = ["", "", "", "", "", ""]; // 
+  console.log(ending)
+  if (ending === undefined) {
+    for (i = 0; i < 6; i++) { //deal with the regular rules
+      output[i] = root + vowel[i];
+    }
+  } else {
+    if (vowel.constructor !== Array) { //shit
+      vowel_array = new Array(6).fill(vowel); // make an array with all one value
+    } else { //vowel
+      vowel_array = vowel; //copypasta
+    }
+    for (i = 0; i < 6; i++) { //deal with the regular rules
+      output[i] = root + vowel_array[i] + ending[i];
+    }
+  }
+  return output;
+}
+
+function conj_with_est(middle, ending) {
+  var output = new Array(6);
+  for (i = 0; i < 3; i++) { //deal with the singular
+    output[i] = givens[3] + middle + ending[i]
+  }
+  for (i = 3; i < 6; i++) { //deal with the plurals
+    output[i] = roots[3] + middle + ending[i]
+  }
+  return output;
+}
+
+function add_string_to_array(add_this, to_this) {
+  var output = ["", "", "", "", "", ""];
+  for (i = 0; i < to_this.length; i++) { //deal with the regular rules
+    output[i] = add_this + to_this[i]
+  }
+  return output;
+}
 
 function ordinal_suffix_of(i) {
   var j = i % 10,
