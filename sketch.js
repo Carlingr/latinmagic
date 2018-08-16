@@ -85,7 +85,6 @@ function setup() {
   output.PerfPassInd = conj_with_est(" ", EstConj);
 
   /*Pluperfect Active Indicative*/
-  console.log("look here")
   PlupEnds = add_string_to_array("era", ActEnds);
   output.PlupActInd = join_parts(roots[2], "", PlupEnds);
   /*Pluperfect Passive Indicative*/
@@ -134,7 +133,6 @@ function setup() {
 function join_parts(root, vowel, ending) {
   var vowel_array; //amazingly, we will need this.
   var output = ["", "", "", "", "", ""]; // 
-  console.log(ending)
   if (ending === undefined) {
     for (i = 0; i < 6; i++) { //deal with the regular rules
       output[i] = root + vowel[i];
