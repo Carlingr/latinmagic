@@ -6,10 +6,10 @@ function join_parts(root, vowel, ending) {
       output[i] = root + vowel[i];
     }
   } else {
-    if (vowel.constructor !== Array) { //shit
-      vowel_array = new Array(6).fill(vowel); // make an array with all one value
-    } else { //vowel
+    if (vowel.constructor === Array) { //Is it an array?
       vowel_array = vowel; //copypasta
+    } else { //shit, it ain't
+      vowel_array = new Array(6).fill(vowel); // make an array with all one value
     }
     for (i = 0; i < 6; i++) { //deal with the regular rules
       output[i] = root + vowel_array[i] + ending[i];
@@ -25,14 +25,6 @@ function conj_with_est(middle, ending) {
   }
   for (i = 3; i < 6; i++) { //deal with the plurals
     output[i] = roots[3] + middle + ending[i]
-  }
-  return output;
-}
-
-function add_string_to_array(add_this, to_this) {
-  var output = ["", "", "", "", "", ""];
-  for (i = 0; i < to_this.length; i++) { //deal with the regular rules
-    output[i] = add_this + to_this[i]
   }
   return output;
 }
